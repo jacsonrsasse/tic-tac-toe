@@ -1,8 +1,7 @@
-import "./App.css";
-import Box from "./components/Box";
+import Login from "./pages/Login";
 
 function App() {
-  return <Box></Box>;
+  return <Login></Login>;
 }
 
 export default App;
