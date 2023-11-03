@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express, { Express, Router, Request, Response } from "express";
 import router from "../routes";
 
 export default class Server {
@@ -8,6 +8,8 @@ export default class Server {
     this.app = express();
 
     this.app.use(router);
+
+    this.app.use(express.json());
 
     this.app.listen(3333, () => {
       console.log("Running");
