@@ -1,7 +1,13 @@
+import WebSocketService from "../../shared/services/web-socket.service";
 import Base from "../Base";
 import LoginDesign from "./Login.style";
 
 function Login() {
+  const onClickTest = () => {
+    const service = new WebSocketService();
+    service.connect();
+  };
+
   return (
     <Base>
       <LoginDesign>
@@ -17,7 +23,7 @@ function Login() {
             id="nickname"
             placeholder="Enter you nickname"
           />
-          <button>Login</button>
+          <button onClick={onClickTest}>Login</button>
         </div>
       </LoginDesign>
     </Base>
