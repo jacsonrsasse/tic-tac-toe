@@ -1,25 +1,20 @@
 import express, { Express, Router, Request, Response } from "express";
-import WebSocketService from "../services/web-socket.service";
+import WebSocketService from "../../modules/web-socket/web-socket.service";
+import { Inject, Service } from "typedi";
 // import router from "../routes";
 
+@Service()
 export default class Server {
   private app: Express;
 
   private players: any[];
 
-  constructor() {
+  constructor(@Inject() private readonly webSocketService: WebSocketService) {
     this.app = express();
 
-    // this.app.use(router);
-
-    // this.app.use(express.json());
-
     this.app.listen(process.env.SERVER_PORT || 3333, () => {
-      const service = new WebSocketService();
-      service.connect();
-      service.registerCustomEvent("player_connected", (socket) => {
-        this.players.push(socket);
-      });
+      console.log("Server listening");
+      this.webSocketService.connect();
     });
   }
 }
