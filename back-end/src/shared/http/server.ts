@@ -13,7 +13,6 @@ export default class Server {
     this.app = express();
 
     this.app.listen(process.env.SERVER_PORT || 3333, () => {
-      console.log("Server listening");
       this.webSocketService.connect();
     });
   }
