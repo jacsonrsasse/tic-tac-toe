@@ -1,14 +1,15 @@
-import { Socket, io } from "socket.io-client";
 import { Inject, Service } from "typedi";
-import { TicTacToeServerSocketEvents } from "@modules/web-socket/enums/tic-tac-toe-server-socket-events.enum";
-import { SocketIoAdapter } from "./adapters/socket-io.adapter";
-import { Observer } from "@shared/types/observer.type";
 import { TicTacToeClientSocketEvents } from "./enums/tic-tac-toe-client-socket-events.enum";
+import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 
 @Service()
 export default class WebSocketService {
-  constructor(@Inject() private readonly webSocketAdapter: SocketIoAdapter) {
-    this.webSocketAdapter.addObserver(this.serverStatusHandler);
+  constructor(
+    @Inject("SOCKET_IO_ADAPTER")
+    private readonly webSocketAdapter: WebSocketAdapterInterface
+  ) {
+    this.webSocketAdapter.addObserver &&
+      this.webSocketAdapter.addObserver(this.serverStatusHandler);
   }
 
   connect() {

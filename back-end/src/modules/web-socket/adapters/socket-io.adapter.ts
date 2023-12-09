@@ -6,7 +6,7 @@ import { TicTacToeClientSocketEvents } from "../enums/tic-tac-toe-client-socket-
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 import { Observer } from "@shared/types/observer.type";
 
-@Service()
+@Service("SOCKET_IO_ADAPTER")
 export class SocketIoAdapter implements WebSocketAdapterInterface {
   private socket!: Socket;
   private observers: Observer[] = [];
