@@ -1,0 +1,3 @@
+export enum DI {
+  SOCKET_IO_ADAPTER = "SOCKET_IO_ADAPTER",
+}
