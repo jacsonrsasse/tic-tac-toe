@@ -1,0 +1,3 @@
+export enum DI {
+  WEB_SOCKET_ADAPTER = "WEB_SOCKET_ADAPTER",
+}
