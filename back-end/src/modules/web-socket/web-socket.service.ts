@@ -7,7 +7,7 @@ import { DI } from "@shared/enums/di.enum";
 @Service()
 export default class WebSocketService {
   constructor(
-    @Inject(DI.SOCKET_IO_ADAPTER)
+    @Inject(DI.WEB_SOCKET_ADAPTER)
     private readonly webSocketAdapter: WebSocketAdapterInterface
   ) {
     this.webSocketAdapter.addObserver &&
