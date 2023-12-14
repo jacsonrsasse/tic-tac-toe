@@ -10,13 +10,15 @@ function Login() {
 
   return (
     <Base>
-      <LoginDesign>
-        {/* <img id="tic-white" src="./src/assets/tic-tac-toe-white.svg" />
-        <img id="tic-black" src="./src/assets/tic-tac-toe-black.svg" /> */}
+      <LoginDesign className="login-area">
+        <div className="logo">
+          <img src="/Logo.png" />
+        </div>
 
-        <div>
-          <img id="logo" src="./src/assets/logo.svg" />
+        <div className="center"></div>
 
+        <div className="form">
+          <img src="/tic-tac-toe.png" />
           <input
             type="text"
             name="nickname"

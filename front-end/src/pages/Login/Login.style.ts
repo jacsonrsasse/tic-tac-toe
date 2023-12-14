@@ -1,55 +1,54 @@
 import styled from "styled-components";
 
 const LoginDesign = styled.div`
-  position: relative;
+  display: grid;
   width: 100%;
   height: 100%;
+  grid-template-columns: 1fr 10px 1fr;
+  /* grid-template-areas: "left center right"; */
 
-  > div {
-    z-index: 10;
+  .logo {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    padding: 50px 0;
+  }
 
-    #logo {
-      width: 400px;
-      flex: 1;
-    }
+  .center {
+    height: 80%;
+    width: 5px;
+    border-color: var(--almost-purple);
+    background-color: var(--almost-purple);
+    align-self: center;
+  }
 
-    input,
-    button {
-      height: 50px;
-      border-radius: 20px;
-      border: none;
-    }
+  .form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
 
     input {
-      width: 320px;
+      width: 420px;
+      height: 60px;
       outline: none;
-      padding: 10px;
+      padding: 20px;
       font-size: 20px;
+      border-radius: 50px;
     }
 
     button {
       width: 160px;
+      height: 60px;
       font-size: 20px;
       color: #fff;
-      background-color: #1a4b21;
+      background-color: var(--black);
       cursor: pointer;
-    }
-  }
+      border-radius: 50px;
+      border: none;
 
-  @media screen and (max-width: 400px) {
-    > div {
-      #logo {
-        width: 200px;
-      }
-
-      input {
-        width: 250px;
+      &:hover {
+        background-color: var(--red);
       }
     }
   }
