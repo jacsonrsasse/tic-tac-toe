@@ -70,7 +70,98 @@ const LoginDesign = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) and (max-width: 992px) {
+  @media screen and (min-width: 992px) and (max-width: 1200px) {
+    display: grid;
+    grid-template-areas:
+      "title logo"
+      "line line"
+      "form form";
+
+    .logo {
+      grid-area: logo;
+
+      .image {
+        width: 90%;
+        height: 90%;
+      }
+    }
+
+    .title {
+      grid-area: title;
+
+      .image {
+        width: 90%;
+        height: 90%;
+      }
+    }
+
+    .line {
+      grid-area: line;
+      width: 100%;
+    }
+
+    .form {
+      grid-area: form;
+
+      input {
+        width: 420px;
+      }
+
+      button {
+        width: 160px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    display: grid;
+    grid-template-areas:
+      "title line -"
+      "title line logo"
+      "title line form";
+    justify-content: unset;
+    align-items: unset;
+
+    .logo {
+      justify-self: center;
+      grid-area: logo;
+
+      .image {
+        width: 426px;
+        height: 426px;
+      }
+    }
+
+    .title {
+      align-self: center;
+      grid-area: title;
+
+      .image {
+        width: 362px;
+        height: 392px;
+      }
+    }
+
+    .line {
+      justify-self: center;
+      grid-area: line;
+      width: 5px;
+      height: 90%;
+    }
+
+    .form {
+      justify-self: center;
+      align-self: flex-start;
+      grid-area: form;
+
+      input {
+        width: 420px;
+      }
+
+      button {
+        width: 160px;
+      }
+    }
   }
 `;
 
