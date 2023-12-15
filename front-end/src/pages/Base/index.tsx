@@ -8,7 +8,7 @@ interface baseProps {
 function Base({ children }: baseProps) {
   return (
     <BaseDesign>
-      <div className="content">{children}</div>
+      <div className="painel">{children}</div>
     </BaseDesign>
   );
 }

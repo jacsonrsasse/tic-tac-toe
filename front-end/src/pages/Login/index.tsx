@@ -1,22 +1,28 @@
-import WebSocketService from "../../shared/services/web-socket.service";
+// import WebSocketService from "../../shared/services/web-socket.service";
 import Base from "../Base";
 import LoginDesign from "./Login.style";
 
 function Login() {
   const onClickTest = () => {
-    const service = new WebSocketService();
-    service.connect();
+    // const service = new WebSocketService();
+    // service.connect();
   };
 
   return (
     <Base>
-      <LoginDesign>
-        {/* <img id="tic-white" src="./src/assets/tic-tac-toe-white.svg" />
-        <img id="tic-black" src="./src/assets/tic-tac-toe-black.svg" /> */}
+      <div></div>
+      <LoginDesign className="login-area">
+        <div className="title">
+          <img className="image" src="/title.png" />
+        </div>
 
-        <div>
-          <img id="logo" src="./src/assets/logo.svg" />
+        <div className="line"></div>
 
+        <div className="logo">
+          <img className="image" src="/tic-tac-toe.png" />
+        </div>
+
+        <div className="form">
           <input
             type="text"
             name="nickname"
