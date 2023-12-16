@@ -12,7 +12,7 @@ const LoginDesign = styled.div`
   /* grid-template-areas: "left center right"; */
 
   .logo {
-    order: 0;
+    order: 2;
 
     .image {
       width: 360px;
@@ -21,7 +21,7 @@ const LoginDesign = styled.div`
   }
 
   .title {
-    order: 2;
+    order: 0;
 
     .image {
       width: 80%;
