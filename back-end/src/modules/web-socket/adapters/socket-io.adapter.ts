@@ -30,7 +30,7 @@ export class SocketIoAdapter implements WebSocketAdapterInterface {
     this.registerEvents();
   }
 
-  addObserver(observer: Observer): void {
+  registerObserver(observer: Observer): void {
     this.observers.push(observer);
   }
 
