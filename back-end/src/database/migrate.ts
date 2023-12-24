@@ -5,8 +5,6 @@ import Database from "better-sqlite3";
 const betterSqlite = new Database("./src/database/database.db");
 const db = drizzle(betterSqlite);
 
-console.log(betterSqlite);
-
 migrate(db, { migrationsFolder: "./src/database/migrations" });
 
 betterSqlite.close();
