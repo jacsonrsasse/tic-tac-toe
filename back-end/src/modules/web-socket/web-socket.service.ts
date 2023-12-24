@@ -3,15 +3,22 @@ import { TicTacToeClientSocketEvents } from "./enums/tic-tac-toe-client-socket-e
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 import { SocketIoAdapter } from "@modules/web-socket/adapters/socket-io.adapter";
 import { DI } from "@shared/enums/di.enum";
+import { DrizzleClientService } from "@shared/services/drizzle-client.service";
 
 @Service()
 export default class WebSocketService {
   constructor(
     @Inject(DI.WEB_SOCKET_ADAPTER)
-    private readonly webSocketAdapter: WebSocketAdapterInterface
+    private readonly webSocketAdapter: WebSocketAdapterInterface,
+    @Inject()
+    private readonly drizzleClientService: DrizzleClientService
   ) {
-    this.webSocketAdapter.addObserver &&
-      this.webSocketAdapter.addObserver(this.serverStatusHandler);
+    this.webSocketAdapter.registerObserver(
+      (event: TicTacToeClientSocketEvents) => {
+        this.serverStatusHandler(event);
+        this.drizzleClientService.getClient();
+      }
+    );
   }
 
   connect() {

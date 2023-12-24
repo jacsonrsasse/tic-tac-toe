@@ -7,7 +7,7 @@ export class WebSocketController {
     @Inject() private readonly createSocketConnection: CreateSocketConnection
   ) {}
 
-  executeUseCases() {
+  createConnection() {
     this.createSocketConnection.execute();
   }
 }
