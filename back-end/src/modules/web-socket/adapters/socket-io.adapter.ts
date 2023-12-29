@@ -4,12 +4,13 @@ import { Service } from "typedi";
 import { SocketDefaultEvents } from "../enums/socket-default-events.enum";
 import { TicTacToeClientSocketEvents } from "../enums/tic-tac-toe-client-socket-events.enum";
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
-import { Observer } from "@shared/types/observer.type";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Service("SOCKET_IO_ADAPTER")
 export class SocketIoAdapter implements WebSocketAdapterInterface {
   private socket!: Socket;
-  private observers: Observer[] = [];
+  private isConnected = false;
+  private _socketStatus = new BehaviorSubject(false);
 
   connect() {
     if (this.socket && this.socket.connected) return false;
@@ -23,15 +24,19 @@ export class SocketIoAdapter implements WebSocketAdapterInterface {
       console.log(`Connected! ID ${this.socket.id}`);
     });
 
-    this.socket.on(SocketDefaultEvents.CONNECT_ERROR, () =>
-      console.log("Lost connection with Web Socket, retrying get connection!")
-    );
+    this.socket.on(SocketDefaultEvents.CONNECT_ERROR, () => {
+      if (this.isConnected) {
+        this.isConnected = false;
+        this._socketStatus.next(false);
+      }
+      console.log("Lost connection with Web Socket, retrying get connection!");
+    });
 
     this.registerEvents();
   }
 
-  registerObserver(observer: Observer): void {
-    this.observers.push(observer);
+  socketStatus$(): Observable<boolean> {
+    return this._socketStatus.asObservable();
   }
 
   private registerEvents() {
@@ -40,9 +45,8 @@ export class SocketIoAdapter implements WebSocketAdapterInterface {
     });
 
     this.socket.on(TicTacToeClientSocketEvents.DEFINED_AS_SERVER, (data) => {
-      this.observers.forEach((observer) =>
-        observer(TicTacToeClientSocketEvents.DEFINED_AS_SERVER)
-      );
+      this.isConnected = true;
+      this._socketStatus.next(true);
     });
   }
 }

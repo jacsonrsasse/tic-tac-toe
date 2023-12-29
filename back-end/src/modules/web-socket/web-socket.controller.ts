@@ -1,13 +1,14 @@
 import { Inject, Service } from "typedi";
-import { CreateSocketConnection } from "./use-cases/create-socket-connection.usecase";
+import { CreateSocketConnectionUseCase } from "./use-cases/create-socket-connection.usecase";
 
 @Service()
 export class WebSocketController {
   constructor(
-    @Inject() private readonly createSocketConnection: CreateSocketConnection
+    @Inject()
+    private readonly createSocketConnectionUseCase: CreateSocketConnectionUseCase
   ) {}
 
   createConnection() {
-    this.createSocketConnection.execute();
+    this.createSocketConnectionUseCase.execute();
   }
 }

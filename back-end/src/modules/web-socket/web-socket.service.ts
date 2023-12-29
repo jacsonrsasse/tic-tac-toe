@@ -4,31 +4,29 @@ import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter
 import { SocketIoAdapter } from "@modules/web-socket/adapters/socket-io.adapter";
 import { DI } from "@shared/enums/di.enum";
 import { DrizzleClientService } from "@shared/services/drizzle-client.service";
+import { BehaviorSubject } from "rxjs";
 
 @Service()
 export default class WebSocketService {
+  private _hasSocket = new BehaviorSubject(false);
+
+  get hasSocket$() {
+    return this._hasSocket.asObservable();
+  }
+
   constructor(
     @Inject(DI.WEB_SOCKET_ADAPTER)
     private readonly webSocketAdapter: WebSocketAdapterInterface,
     @Inject()
     private readonly drizzleClientService: DrizzleClientService
   ) {
-    this.webSocketAdapter.registerObserver(
-      (event: TicTacToeClientSocketEvents) => {
-        this.serverStatusHandler(event);
-        this.drizzleClientService.getClient();
-      }
-    );
+    this.webSocketAdapter.socketStatus$().subscribe((socketStatus: boolean) => {
+      this._hasSocket.next(socketStatus);
+      console.log(socketStatus);
+    });
   }
 
   connect() {
     this.webSocketAdapter.connect();
-  }
-
-  private serverStatusHandler(event: TicTacToeClientSocketEvents) {
-    if (event === TicTacToeClientSocketEvents.DEFINED_AS_SERVER) {
-      return console.log("Server ready and listening!");
-    }
-    return console.log("Server down, please wait!");
   }
 }
