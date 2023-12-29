@@ -27,4 +27,4 @@ dist-ssr
 .env
 
 */database/*.db
-*/database/migrations/**/*
+*/database/migrations/meta/**
