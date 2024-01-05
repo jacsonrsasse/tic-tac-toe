@@ -15,9 +15,12 @@ export default class Server {
   ) {
     this.app = express();
 
+    this.app.set("trust proxy", true);
+    this.app.use(express.json());
+
     this.app.use(routes);
 
-    this.app.listen(process.env.SERVER_PORT || 3333, () => {
+    this.app.listen(process.env.SERVER_PORT || 3000, () => {
       this.webSocketController.createConnection();
     });
   }
