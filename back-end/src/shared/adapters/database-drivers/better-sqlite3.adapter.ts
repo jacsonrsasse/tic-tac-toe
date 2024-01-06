@@ -3,7 +3,7 @@ import { DatabaseDriverInterface } from "../interfaces/database-driver.interface
 import { drizzle, BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import Database, { Database as DatabaseType } from "better-sqlite3";
 
-type dbClient = BetterSQLite3Database<Record<string, never>>;
+export type dbClient = BetterSQLite3Database<Record<string, never>>;
 
 @Service()
 export class BetterSqlite3Adapter implements DatabaseDriverInterface {

@@ -1,7 +1,7 @@
 import { Inject, Service } from "typedi";
-import * as schema from "@database/schema";
 import { DI } from "@shared/enums/di.enum";
 import { DatabaseDriverInterface } from "@shared/adapters/interfaces/database-driver.interface";
+import { dbClient } from "@shared/adapters/database-drivers/better-sqlite3.adapter";
 
 @Service()
 export class DrizzleClientService {
@@ -10,7 +10,7 @@ export class DrizzleClientService {
     private readonly databaseDriverAdapter: DatabaseDriverInterface
   ) {}
 
-  getClient() {
+  getClient(): dbClient {
     return this.databaseDriverAdapter.client();
   }
 }
