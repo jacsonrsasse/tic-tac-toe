@@ -2,7 +2,6 @@ import { Inject, Service } from "typedi";
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 import { DI } from "@shared/enums/di.enum";
 import { DrizzleClientService } from "@shared/services/drizzle-client.service";
-import { BehaviorSubject } from "rxjs";
 import { WebSocketConnectionBridge } from "./web-socket-connection.bridge";
 
 @Service()
@@ -24,5 +23,6 @@ export default class WebSocketService {
 
   connect() {
     this.webSocketAdapter.connect();
+    this.drizzleClientService.getClient();
   }
 }
