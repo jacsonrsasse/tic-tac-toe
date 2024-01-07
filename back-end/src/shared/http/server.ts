@@ -1,18 +1,26 @@
-import express, { Express, Router, Request, Response } from "express";
-import { Inject, Service } from "typedi";
-import { WebSocketController } from "@modules/web-socket/web-socket.controller";
 import routes from "./routes";
-// import router from "../routes";
+import express, { Express } from "express";
+import { WebSocketHandler } from "@modules/web-socket/web-socket.handler";
+import { Container } from "inversify";
+import { InversifyTypes } from "src/config/inversify/types";
+import inversifyRegister from "src/config/inversify/di-register";
 
-@Service()
 export default class Server {
   private app: Express;
 
-  private players: any[];
+  private container: Container;
 
-  constructor(
-    @Inject() private readonly webSocketController: WebSocketController
-  ) {
+  constructor() {
+    this.inversifyContainerStart();
+
+    this.appStart();
+  }
+
+  private inversifyContainerStart() {
+    this.container = inversifyRegister();
+  }
+
+  private appStart() {
     this.app = express();
 
     this.app.set("trust proxy", true);
@@ -21,7 +29,13 @@ export default class Server {
     this.app.use(routes);
 
     this.app.listen(process.env.SERVER_PORT || 3000, () => {
-      this.webSocketController.createConnection();
+      this.webSocketStart();
     });
+  }
+
+  private webSocketStart() {
+    const webSocketHandler = this.container.resolve(WebSocketHandler);
+
+    webSocketHandler.createConnection();
   }
 }

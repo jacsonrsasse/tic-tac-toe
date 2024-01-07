@@ -1,4 +1,4 @@
-import { Service } from "typedi";
+import { injectable } from "inversify";
 
-@Service()
+@injectable()
 export class LoginUseCase {}

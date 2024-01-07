@@ -1,10 +1,9 @@
-import { Inject, Service } from "typedi";
 import { CreateSocketConnectionUseCase } from "./use-cases/create-socket-connection.usecase";
+import { injectable } from "inversify";
 
-@Service()
-export class WebSocketController {
+@injectable()
+export class WebSocketHandler {
   constructor(
-    @Inject()
     private readonly createSocketConnectionUseCase: CreateSocketConnectionUseCase
   ) {}
 

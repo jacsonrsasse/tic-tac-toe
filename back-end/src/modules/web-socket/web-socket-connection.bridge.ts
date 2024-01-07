@@ -1,6 +1,6 @@
-import { Service } from "typedi";
+import { injectable } from "inversify";
 
-@Service()
+@injectable()
 export class WebSocketConnectionBridge {
   private _isConnected = false;
 

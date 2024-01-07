@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { Service } from "typedi";
+import { injectable } from "inversify";
 
-@Service()
+@injectable()
 export class LoginController {
   login(request: Request, response: Response) {
     response.json({

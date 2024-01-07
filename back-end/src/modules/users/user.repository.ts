@@ -1,13 +1,11 @@
-import { Inject, Service } from "typedi";
+import { injectable } from "inversify";
 import { CreateUserSchemaType } from "./dto/create-user-schema.dto";
 import { DrizzleClientService } from "@shared/services/drizzle-client.service";
 import { users } from "@database/schema";
 
-@Service()
+@injectable()
 export class UserRepository {
-  constructor(
-    @Inject() private readonly drizzleClientService: DrizzleClientService
-  ) {}
+  constructor(private readonly drizzleClientService: DrizzleClientService) {}
 
   public async create(createUser: CreateUserSchemaType) {
     const user = await this.drizzleClientService

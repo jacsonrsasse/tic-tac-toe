@@ -1,12 +1,12 @@
 import { Router } from "express";
-import Container from "typedi";
 import { LoginController } from "./login.controller";
 import isConnectableMiddleware from "@shared/middlewares/is-connectable.middleware";
 import routeParamsMiddleware from "@shared/middlewares/route-params.middleware";
 import { loginSchemaDto } from "./dto/login-schema.dto";
+import inversifyRegister from "src/config/inversify/di-register";
 
 const loginRoutes = Router();
-const controller = Container.get(LoginController);
+const controller = inversifyRegister().get(LoginController);
 
 loginRoutes.use(isConnectableMiddleware);
 

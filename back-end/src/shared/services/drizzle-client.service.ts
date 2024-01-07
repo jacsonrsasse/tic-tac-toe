@@ -1,12 +1,12 @@
-import { Inject, Service } from "typedi";
-import { DI } from "@shared/enums/di.enum";
+import { inject, injectable } from "inversify";
 import { DatabaseDriverInterface } from "@shared/adapters/interfaces/database-driver.interface";
 import { dbClient } from "@shared/adapters/database-drivers/better-sqlite3.adapter";
+import { InversifyTypes } from "src/config/inversify/types";
 
-@Service()
+@injectable()
 export class DrizzleClientService {
   constructor(
-    @Inject(DI.DRIZZLE_DATABASE_DRIVER_ADAPTER)
+    @inject(InversifyTypes.DatabaseDriverInterface)
     private readonly databaseDriverAdapter: DatabaseDriverInterface
   ) {}
 

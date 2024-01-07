@@ -1,12 +1,12 @@
 import { TicTacToeServerSocketEvents } from "@modules/web-socket/enums/tic-tac-toe-server-socket-events.enum";
 import { Socket, io } from "socket.io-client";
-import { Service } from "typedi";
 import { SocketDefaultEvents } from "../enums/socket-default-events.enum";
 import { TicTacToeClientSocketEvents } from "../enums/tic-tac-toe-client-socket-events.enum";
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 import { BehaviorSubject, Observable } from "rxjs";
+import { injectable } from "inversify";
 
-@Service("SOCKET_IO_ADAPTER")
+@injectable()
 export class SocketIoAdapter implements WebSocketAdapterInterface {
   private socket!: Socket;
   private isConnected = false;

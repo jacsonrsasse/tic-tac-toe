@@ -1,17 +1,13 @@
-import { Inject, Service } from "typedi";
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
-import { DI } from "@shared/enums/di.enum";
-import { DrizzleClientService } from "@shared/services/drizzle-client.service";
 import { WebSocketConnectionBridge } from "./web-socket-connection.bridge";
+import { inject, injectable } from "inversify";
+import { InversifyTypes } from "src/config/inversify/types";
 
-@Service()
-export default class WebSocketService {
+@injectable()
+export class WebSocketService {
   constructor(
-    @Inject(DI.WEB_SOCKET_ADAPTER)
+    @inject(InversifyTypes.WebSocketAdapterInterface)
     private readonly webSocketAdapter: WebSocketAdapterInterface,
-    @Inject()
-    private readonly drizzleClientService: DrizzleClientService,
-    @Inject()
     private readonly webSocketConnectionBridge: WebSocketConnectionBridge
   ) {
     this.webSocketAdapter
@@ -23,6 +19,5 @@ export default class WebSocketService {
 
   connect() {
     this.webSocketAdapter.connect();
-    this.drizzleClientService.getClient();
   }
 }

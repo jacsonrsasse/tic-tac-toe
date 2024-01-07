@@ -1,9 +1,9 @@
-import { Inject, Service } from "typedi";
-import WebSocketService from "../web-socket.service";
+import { WebSocketService } from "../web-socket.service";
+import { injectable } from "inversify";
 
-@Service()
+@injectable()
 export class CreateSocketConnectionUseCase {
-  constructor(@Inject() private readonly webSocketService: WebSocketService) {}
+  constructor(private readonly webSocketService: WebSocketService) {}
 
   execute() {
     this.webSocketService.connect();

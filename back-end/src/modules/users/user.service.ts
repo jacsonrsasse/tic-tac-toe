@@ -1,4 +1,4 @@
-import { Inject, Service } from "typedi";
+import { injectable } from "inversify";
 import { UserRepository } from "./user.repository";
 import {
   CreateUserSchemaType,
@@ -6,9 +6,9 @@ import {
 } from "./dto/create-user-schema.dto";
 import schemaTypeValidator from "@shared/validations/schema-type.validator";
 
-@Service()
+@injectable()
 export class UserService {
-  constructor(@Inject() private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   public async create(createUser: CreateUserSchemaType) {
     if (schemaTypeValidator(createUserSchemaDto, createUser)) {
