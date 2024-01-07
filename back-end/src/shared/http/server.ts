@@ -2,8 +2,7 @@ import routes from "./routes";
 import express, { Express } from "express";
 import { WebSocketHandler } from "@modules/web-socket/web-socket.handler";
 import { Container } from "inversify";
-import { InversifyTypes } from "src/config/inversify/types";
-import inversifyRegister from "src/config/inversify/di-register";
+import getContainer from "src/config/inversify/di-register";
 
 export default class Server {
   private app: Express;
@@ -17,7 +16,7 @@ export default class Server {
   }
 
   private inversifyContainerStart() {
-    this.container = inversifyRegister();
+    this.container = getContainer();
   }
 
   private appStart() {

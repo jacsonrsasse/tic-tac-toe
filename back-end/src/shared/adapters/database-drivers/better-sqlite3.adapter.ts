@@ -1,11 +1,11 @@
-import { Service } from "typedi";
 import { DatabaseDriverInterface } from "../interfaces/database-driver.interface";
 import { drizzle, BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import Database, { Database as DatabaseType } from "better-sqlite3";
+import { injectable } from "inversify";
 
 export type dbClient = BetterSQLite3Database<Record<string, never>>;
 
-@Service()
+@injectable()
 export class BetterSqlite3Adapter implements DatabaseDriverInterface {
   private pathDB = process.env.DATABASE_URL || "./db/database.db";
 
