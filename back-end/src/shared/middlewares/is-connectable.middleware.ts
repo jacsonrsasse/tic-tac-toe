@@ -1,6 +1,6 @@
 import { WebSocketConnectionBridge } from "@modules/web-socket/web-socket-connection.bridge";
 import { NextFunction, Request, Response } from "express";
-import getContainer from "src/config/inversify/di-register";
+import { getContainer } from "src/config/inversify";
 
 const isConnectableMiddleware = (
   request: Request,

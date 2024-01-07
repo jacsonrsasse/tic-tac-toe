@@ -3,7 +3,7 @@ import { LoginController } from "./login.controller";
 import isConnectableMiddleware from "@shared/middlewares/is-connectable.middleware";
 import routeParamsMiddleware from "@shared/middlewares/route-params.middleware";
 import { loginSchemaDto } from "./dto/login-schema.dto";
-import getContainer from "src/config/inversify/di-register";
+import { getContainer } from "src/config/inversify";
 
 const loginRoutes = Router();
 const controller = getContainer().get(LoginController);
