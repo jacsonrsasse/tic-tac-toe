@@ -1,8 +1,8 @@
 import { Router } from "express";
-import loginRoutes from "@modules/login/login.route";
+import sessionRoutes from "@modules/session/session.route";
 
 const routes = Router();
 
-routes.use("/login", loginRoutes);
+routes.use("/session/login", sessionRoutes);
 
 export default routes;
