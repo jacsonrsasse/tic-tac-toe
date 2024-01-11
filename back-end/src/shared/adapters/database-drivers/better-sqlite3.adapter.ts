@@ -1,30 +1,20 @@
-import { Service } from "typedi";
 import { DatabaseDriverInterface } from "../interfaces/database-driver.interface";
-import * as schema from "@database/schema";
 import { drizzle, BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import Database, { Database as DatabaseType } from "better-sqlite3";
-import path from "path";
+import { injectable } from "inversify";
 
-type dbClient = BetterSQLite3Database<Record<string, never>>;
+export type dbClient = BetterSQLite3Database<Record<string, never>>;
 
-@Service()
+@injectable()
 export class BetterSqlite3Adapter implements DatabaseDriverInterface {
-  private pathDB = path.join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "/database",
-    "database.db"
-  );
+  private pathDB = process.env.DATABASE_URL || "./db/database.db";
 
   private sqlite: DatabaseType;
   private db: dbClient;
 
   connect() {
     this.sqlite = new Database(this.pathDB, {
-      fileMustExist: false,
+      fileMustExist: true,
     });
     this.db = drizzle(this.sqlite);
   }

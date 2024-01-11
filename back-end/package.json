@@ -21,7 +21,6 @@
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.7.0",
-    "typedi": "^0.10.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
@@ -29,7 +28,11 @@
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.1",
     "express": "^4.18.2",
+    "inversify": "^6.0.2",
+    "inversify-express-utils": "^6.4.6",
+    "rxjs": "^7.8.1",
     "socket.io": "^4.7.2",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "zod": "^3.22.4"
   }
 }

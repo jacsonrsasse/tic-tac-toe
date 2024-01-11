@@ -1,34 +1,23 @@
-import { Inject, Service } from "typedi";
-import { TicTacToeClientSocketEvents } from "./enums/tic-tac-toe-client-socket-events.enum";
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
-import { SocketIoAdapter } from "@modules/web-socket/adapters/socket-io.adapter";
-import { DI } from "@shared/enums/di.enum";
-import { DrizzleClientService } from "@shared/services/drizzle-client.service";
+import { WebSocketConnectionBridge } from "./web-socket-connection.bridge";
+import { inject, injectable } from "inversify";
+import { InversifyTypes } from "src/config/inversify";
 
-@Service()
-export default class WebSocketService {
+@injectable()
+export class WebSocketService {
   constructor(
-    @Inject(DI.WEB_SOCKET_ADAPTER)
+    @inject(InversifyTypes.WebSocketAdapterInterface)
     private readonly webSocketAdapter: WebSocketAdapterInterface,
-    @Inject()
-    private readonly drizzleClientService: DrizzleClientService
+    private readonly webSocketConnectionBridge: WebSocketConnectionBridge
   ) {
-    this.webSocketAdapter.registerObserver(
-      (event: TicTacToeClientSocketEvents) => {
-        this.serverStatusHandler(event);
-        this.drizzleClientService.getClient();
-      }
-    );
+    this.webSocketAdapter
+      .socketStatus$()
+      .subscribe((socketStatus: boolean) =>
+        this.webSocketConnectionBridge.socketStatusHandler(socketStatus)
+      );
   }
 
   connect() {
     this.webSocketAdapter.connect();
-  }
-
-  private serverStatusHandler(event: TicTacToeClientSocketEvents) {
-    if (event === TicTacToeClientSocketEvents.DEFINED_AS_SERVER) {
-      return console.log("Server ready and listening!");
-    }
-    return console.log("Server down, please wait!");
   }
 }

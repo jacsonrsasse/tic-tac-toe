@@ -1,6 +1,6 @@
-import { Observer } from "@shared/types/observer.type";
+import { Observable } from "rxjs";
 
 export interface WebSocketAdapterInterface {
   connect: () => void;
-  registerObserver: (observer: Observer) => void;
+  socketStatus$: () => Observable<boolean>;
 }
