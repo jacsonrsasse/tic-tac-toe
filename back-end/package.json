@@ -29,6 +29,7 @@
     "drizzle-orm": "^0.29.1",
     "express": "^4.18.2",
     "inversify": "^6.0.2",
+    "inversify-express-utils": "^6.4.6",
     "rxjs": "^7.8.1",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
