@@ -1,17 +1,15 @@
-import routes from "./routes";
-import express, { Express } from "express";
+import express from "express";
 import { WebSocketHandler } from "@modules/web-socket/web-socket.handler";
 import { Container } from "inversify";
-import { getContainer } from "src/config/inversify";
+import { getContainer } from "@config/inversify";
+import { InversifyExpressServer } from "inversify-express-utils";
+import isConnectableMiddleware from "@shared/middlewares/is-connectable.middleware";
 
 export default class Server {
-  private app: Express;
-
   private container: Container;
 
   constructor() {
     this.inversifyContainerStart();
-
     this.appStart();
   }
 
@@ -20,14 +18,18 @@ export default class Server {
   }
 
   private appStart() {
-    this.app = express();
+    const server: InversifyExpressServer = new InversifyExpressServer(
+      this.container
+    );
 
-    this.app.set("trust proxy", true);
-    this.app.use(express.json());
+    server.setConfig((app) => {
+      app.use(express.json());
 
-    this.app.use(routes);
+      app.use(isConnectableMiddleware);
+    });
 
-    this.app.listen(process.env.SERVER_PORT || 3000, () => {
+    const app = server.build();
+    app.listen(process.env.SERVER_PORT || 3000, () => {
       this.webSocketStart();
     });
   }
