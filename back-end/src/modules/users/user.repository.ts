@@ -19,4 +19,8 @@ export class UserRepository {
 
     return user;
   }
+
+  public async listAll() {
+    return this.drizzleClientService.getClient().select().from(users);
+  }
 }
