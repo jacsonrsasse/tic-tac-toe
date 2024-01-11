@@ -1,26 +1,29 @@
 import { Request, Response } from "express";
-import { injectable } from "inversify";
-import { CreateSessionUseCase } from "./use-cases/create-session.usecase";
+import routeParamsMiddleware from "@shared/middlewares/route-params.middleware";
+
 import {
   controller,
-  httpGet,
+  httpDelete,
   httpPost,
   interfaces,
-  request,
+  requestParam,
   response,
 } from "inversify-express-utils";
-import { UserRepository } from "@modules/users/user.repository";
-import routeParamsMiddleware from "@shared/middlewares/route-params.middleware";
-import { loginSchemaDto } from "./dto/login-schema.dto";
+
+import { DeleteSessionUseCase } from "./use-cases/delete-session.usecase";
+import { CreateSessionUseCase } from "./use-cases/create-session.usecase";
+
+import { createSessionDto } from "./dto/create-session.dto";
+import { deleteteSessionDto } from "./dto/delete-session.dto";
 
 @controller("/session")
 export class SessionController implements interfaces.Controller {
   constructor(
     private readonly createSessionUseCase: CreateSessionUseCase,
-    private readonly userRepository: UserRepository
+    private readonly deleteSessionUseCase: DeleteSessionUseCase
   ) {}
 
-  @httpPost("/login", routeParamsMiddleware(loginSchemaDto))
+  @httpPost("/login", routeParamsMiddleware(createSessionDto))
   async create(request: Request, response: Response) {
     const user = await this.createSessionUseCase.execute({
       nickname: request.body.nickname,
@@ -34,9 +37,15 @@ export class SessionController implements interfaces.Controller {
     });
   }
 
-  @httpGet("/")
-  async listUsers(@response() response: Response) {
-    const users = await this.userRepository.listAll();
-    response.status(200).json(users);
+  @httpDelete("/logout/:id", routeParamsMiddleware(deleteteSessionDto))
+  async delete(@requestParam("id") id: number, @response() response: Response) {
+    const user = await this.deleteSessionUseCase.execute({
+      id: Number(id),
+    });
+    console.log(user);
+
+    response.status(200).send({
+      message: "Logout successfull",
+    });
   }
 }

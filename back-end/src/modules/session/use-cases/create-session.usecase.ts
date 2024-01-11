@@ -1,4 +1,4 @@
-import { CreateUserSchemaType } from "@modules/users/dto/create-user-schema.dto";
+import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
 import { UserRepository } from "@modules/users/user.repository";
 import { injectable } from "inversify";
 
@@ -6,7 +6,7 @@ import { injectable } from "inversify";
 export class CreateSessionUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  execute(loginCreateUser: CreateUserSchemaType) {
-    return this.userRepository.create(loginCreateUser);
+  execute(createUser: CreateUserDtoType) {
+    return this.userRepository.create(createUser);
   }
 }
