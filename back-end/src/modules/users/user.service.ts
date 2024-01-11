@@ -3,7 +3,7 @@ import { UserRepository } from "./user.repository";
 import {
   CreateUserSchemaType,
   createUserSchemaDto,
-} from "./dto/create-user-schema.dto";
+} from "./dto/create-user.dto";
 import schemaTypeValidator from "@shared/validations/schema-type.validator";
 
 @injectable()
