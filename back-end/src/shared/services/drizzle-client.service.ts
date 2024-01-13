@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { DatabaseDriverInterface } from "@shared/adapters/interfaces/database-driver.interface";
 import { dbClient } from "@shared/adapters/database-drivers/better-sqlite3.adapter";
-import { InversifyTypes } from "src/config/inversify";
+import { InversifyTypes } from "@config/inversify";
 
 @injectable()
 export class DrizzleClientService {
