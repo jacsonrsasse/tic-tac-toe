@@ -1,5 +1,5 @@
 // import WebSocketService from "../../shared/services/web-socket.service";
-import Base from "../Base";
+import Base from "../Base-old";
 import LoginDesign from "./Login.style";
 
 function Login() {
@@ -10,7 +10,6 @@ function Login() {
 
   return (
     <Base>
-      <div></div>
       <LoginDesign className="login-area">
         <div className="title">
           <img className="image" src="/title.png" />
