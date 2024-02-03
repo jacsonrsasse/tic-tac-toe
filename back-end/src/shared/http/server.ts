@@ -4,6 +4,7 @@ import { Container } from "inversify";
 import { getContainer } from "@config/inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import isConnectableMiddleware from "@shared/middlewares/is-connectable.middleware";
+import { env } from "@config/env";
 
 export default class Server {
   private container: Container;
@@ -29,7 +30,7 @@ export default class Server {
     });
 
     const app = server.build();
-    app.listen(process.env.SERVER_PORT || 3000, () => {
+    app.listen(env.SERVER_PORT || 3000, () => {
       this.webSocketStart();
     });
   }
