@@ -6,7 +6,7 @@ import { InversifyTypes } from "@config/inversify";
 @injectable()
 export class DrizzleClientService {
   constructor(
-    @inject(InversifyTypes.DatabaseDriverInterface)
+    @inject(InversifyTypes.DATABASE_DRIVER)
     private readonly databaseDriverAdapter: DatabaseDriverInterface
   ) {}
 

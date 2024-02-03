@@ -1,10 +1,14 @@
+import { InversifyTypes } from "@config/inversify";
 import { DeleteUserDtoType } from "@modules/users/dto/delete-user.dto";
-import { UserRepository } from "@modules/users/user.repository";
-import { injectable } from "inversify";
+import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
+import { inject, injectable } from "inversify";
 
 @injectable()
 export class DeleteSessionUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @inject(InversifyTypes.USER_REPOSITORY)
+    private readonly userRepository: UserRepositoryInterface
+  ) {}
 
   execute(deleteUser: DeleteUserDtoType) {
     return this.userRepository.delete(deleteUser);

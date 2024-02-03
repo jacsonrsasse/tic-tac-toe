@@ -1,12 +1,27 @@
+import { InversifyTypes } from "@config/inversify";
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
-import { UserRepository } from "@modules/users/user.repository";
-import { injectable } from "inversify";
+import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
+import { inject, injectable } from "inversify";
+import { sign } from "jsonwebtoken";
 
 @injectable()
 export class CreateSessionUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @inject(InversifyTypes.USER_REPOSITORY)
+    private readonly userRepository: UserRepositoryInterface
+  ) {}
 
-  execute(createUser: CreateUserDtoType) {
-    return this.userRepository.create(createUser);
+  async execute(createUser: CreateUserDtoType) {
+    const user = await this.userRepository.create(createUser);
+
+    if (!user) return;
+
+    const token = sign(
+      {},
+      "XxFoPIdVeTl0c9OjdyIzALGCRC5eumeDrC5FHmwzXfB9fJArzxOXPrhRszB5bEMV",
+      {
+        subject: user.userId,
+      }
+    );
   }
 }
