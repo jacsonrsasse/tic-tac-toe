@@ -1,4 +1,5 @@
 export const InversifyTypes = {
-  WebSocketAdapterInterface: Symbol.for("WebSocketAdapterInterface"),
-  DatabaseDriverInterface: Symbol.for("DatabaseDriverInterface"),
+  WEB_SOCKET_ADAPTER: Symbol.for("WebSocketAdapterInterface"),
+  DATABASE_DRIVER: Symbol.for("DatabaseDriverInterface"),
+  USER_REPOSITORY: Symbol.for("UserRepositoryInterface"),
 };

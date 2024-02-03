@@ -6,7 +6,7 @@ import { InversifyTypes } from "@config/inversify";
 @injectable()
 export class WebSocketService {
   constructor(
-    @inject(InversifyTypes.WebSocketAdapterInterface)
+    @inject(InversifyTypes.WEB_SOCKET_ADAPTER)
     private readonly webSocketAdapter: WebSocketAdapterInterface,
     private readonly webSocketConnectionBridge: WebSocketConnectionBridge
   ) {

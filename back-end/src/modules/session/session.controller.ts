@@ -13,7 +13,10 @@ import {
 import { DeleteSessionUseCase } from "./use-cases/delete-session.usecase";
 import { CreateSessionUseCase } from "./use-cases/create-session.usecase";
 
-import { createSessionDto } from "./dto/create-session.dto";
+import {
+  CreateSessionDtoType,
+  createSessionDto,
+} from "./dto/create-session.dto";
 import { deleteteSessionDto } from "./dto/delete-session.dto";
 
 @controller("/session")
@@ -25,10 +28,16 @@ export class SessionController implements interfaces.Controller {
 
   @httpPost("/login", routeParamsMiddleware(createSessionDto))
   async create(request: Request, response: Response) {
+    const {
+      body: { nickname, connectionId },
+    } = request as CreateSessionDtoType;
+
     const user = await this.createSessionUseCase.execute({
-      nickname: request.body.nickname,
       ipAddress: request.ip,
+      nickname,
+      connectionId,
     });
+
     response.json({
       statusCode: 200,
       message: {
@@ -38,9 +47,9 @@ export class SessionController implements interfaces.Controller {
   }
 
   @httpDelete("/logout/:id", routeParamsMiddleware(deleteteSessionDto))
-  async delete(@requestParam("id") id: number, @response() response: Response) {
+  async delete(@requestParam("id") id: string, @response() response: Response) {
     const user = await this.deleteSessionUseCase.execute({
-      id: Number(id),
+      id,
     });
     console.log(user);
 

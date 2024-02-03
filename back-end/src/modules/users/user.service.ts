@@ -1,17 +1,14 @@
 import { injectable } from "inversify";
-import { UserRepository } from "./user.repository";
-import {
-  CreateUserSchemaType,
-  createUserSchemaDto,
-} from "./dto/create-user.dto";
+import { UserRepository } from "./repositories/drizzle/user.repository";
+import { CreateUserDtoType, createUserDto } from "./dto/create-user.dto";
 import schemaTypeValidator from "@shared/validations/schema-type.validator";
 
 @injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  public async create(createUser: CreateUserSchemaType) {
-    if (schemaTypeValidator(createUserSchemaDto, createUser)) {
+  public async create(createUser: CreateUserDtoType) {
+    if (schemaTypeValidator(createUserDto, createUser)) {
       return false;
     }
 
