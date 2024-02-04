@@ -23,14 +23,18 @@ export class UserRepository implements UserRepositoryInterface {
     return userData;
   }
 
-  listAll(): Promise<void | User[]> {
-    throw new Error("Method not implemented.");
+  async listAll(): Promise<void | User[]> {
+    return this.redisClientService.getAllAsJson<User>(
+      `${this.USER_CONSTANT_KEY}:*`
+    );
   }
 
-  delete(
+  async delete(
     deleteUser: DeleteUserDtoType
-  ): Promise<void | { deletedUserId: any }> {
-    throw new Error("Method not implemented.");
+  ): Promise<void | { deletedUserId: string }> {
+    await this.redisClientService.delete(this.createUserKey(deleteUser.id));
+
+    return { deletedUserId: deleteUser.id };
   }
 
   private createUserKey(connectionId: string): string {

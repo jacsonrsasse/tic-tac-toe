@@ -1,6 +1,7 @@
 import { env } from "@config/env";
 import { injectable } from "inversify";
 import { RedisClientType, createClient } from "redis";
+import { promise } from "zod";
 
 @injectable()
 export class RedisClientService {
@@ -15,6 +16,19 @@ export class RedisClientService {
     this.client.connect();
   }
 
+  async getAllAsJson<T>(keyPrefix: string): Promise<T[] | void> {
+    const keysData = await this.client.keys(keyPrefix);
+
+    if (!keysData) return;
+
+    const promiseResult = await Promise.allSettled(
+      keysData.map((key) => this.getAsJson<T>(key))
+    );
+    return promiseResult.flatMap((result) =>
+      result.status === "fulfilled" ? (result.value as T) : []
+    );
+  }
+
   async getAsJson<T>(key: string): Promise<T | void> {
     const dataAsString = await this.client.get(key);
 
@@ -27,5 +41,9 @@ export class RedisClientService {
 
   async setJsonData<T>(key: string, data: T) {
     return this.client.set(key, JSON.stringify(data));
+  }
+
+  async delete(key: string) {
+    return this.client.del(key);
   }
 }
