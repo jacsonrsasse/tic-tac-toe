@@ -12,7 +12,7 @@ const isConnectableMiddleware = (
   );
 
   if (!webSocketConnectionBridge.isConnected) {
-    return response.status(500).json({ message: "Internal server error" });
+    return response.status(503).json({ message: "Service Unavailable" });
   }
 
   return next();

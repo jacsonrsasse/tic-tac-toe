@@ -1,24 +1,22 @@
-type ExcludeMethods<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : T[K];
-};
+import { ExcludeMethods } from "@shared/utils/exclude-methods.util";
 
 type UserProps = ExcludeMethods<User>;
 
 export class User {
   userId: string;
   nickname: string;
-  connectionId: string | null;
-  ipAddress: string | null;
-  victories: number;
-  defeats: number;
+  connectionId: string;
+  ipAddress?: string;
+  victories?: number;
+  defeats?: number;
 
   constructor(props: UserProps) {
     this.userId = props.userId;
     this.nickname = props.nickname;
     this.connectionId = props.connectionId;
     this.ipAddress = props.ipAddress;
-    this.victories = props.victories;
-    this.defeats = props.defeats;
+    this.victories = props.victories || 0;
+    this.defeats = props.defeats || 0;
   }
 
   static getInstance(props: UserProps) {
