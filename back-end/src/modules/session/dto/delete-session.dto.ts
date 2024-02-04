@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const deleteteSessionDto = z.object({
   params: z.object({
-    id: z.string().cuid2(),
+    id: z.string(),
   }),
 });
 
