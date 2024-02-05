@@ -5,6 +5,8 @@ import { getContainer } from "@config/inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import isConnectableMiddleware from "@shared/middlewares/is-connectable.middleware";
 import { env } from "@config/env";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 export default class Server {
   private container: Container;
@@ -24,7 +26,15 @@ export default class Server {
     );
 
     server.setConfig((app) => {
+      app.use(
+        cors({
+          credentials: true,
+        })
+      );
+
       app.use(express.json());
+
+      app.use(cookieParser());
 
       app.use(isConnectableMiddleware);
     });
