@@ -1,46 +1,22 @@
 import { Container } from "inversify";
-import { InversifyTypes } from ".";
 
-// abstractions
-import { DatabaseDriverInterface } from "@shared/adapters/interfaces/database-driver.interface";
-import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
-import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
-
-// bindTo
-import { SocketIoAdapter } from "@modules/web-socket/adapters/socket-io.adapter";
-import { BetterSqlite3Adapter } from "@shared/adapters/database-drivers/better-sqlite3.adapter";
-import { UserRepository } from "@modules/users/repositories/redis/user.respository";
-
-// singletons
-import { WebSocketConnectionBridge } from "@modules/web-socket/web-socket-connection.bridge";
+// modules
+import { sharedModule } from "@shared/shared.inversify";
+import { webSocketModule } from "@modules/web-socket/web-socket.inversify";
+import { sessionModule } from "@modules/session/session.inversify";
+import { userModule } from "@modules/users/user.inversify";
 
 const inversifyConfig = (() => {
   let container = new Container({ autoBindInjectable: true });
 
-  const inversifyRegister = () => {
-    container
-      .bind<WebSocketAdapterInterface>(InversifyTypes.WEB_SOCKET_ADAPTER)
-      .to(SocketIoAdapter);
-
-    container
-      .bind<DatabaseDriverInterface>(InversifyTypes.DATABASE_DRIVER)
-      .to(BetterSqlite3Adapter);
-
-    container
-      .bind<UserRepositoryInterface>(InversifyTypes.USER_REPOSITORY)
-      .to(UserRepository);
-
-    container
-      .bind<WebSocketConnectionBridge>(WebSocketConnectionBridge)
-      .toSelf()
-      .inSingletonScope();
-  };
+  container.load(sharedModule);
+  container.load(webSocketModule);
+  container.load(sessionModule);
+  container.load(userModule);
 
   const getContainer = () => {
     return container;
   };
-
-  inversifyRegister();
 
   return {
     getContainer,
