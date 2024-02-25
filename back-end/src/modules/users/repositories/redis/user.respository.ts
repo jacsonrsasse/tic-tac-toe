@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { UserRepositoryInterface } from "../interfaces/user-repository.interface";
 import { User } from "@modules/users/entities/user.entity";
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
@@ -10,7 +10,10 @@ import { convertUndefinedPropertiesToNull } from "@shared/utils/undefinable-to-n
 export class UserRepository implements UserRepositoryInterface {
   private USER_CONSTANT_KEY = "user_connection";
 
-  constructor(private readonly redisClientService: RedisClientService) {}
+  constructor(
+    @inject(RedisClientService)
+    private readonly redisClientService: RedisClientService
+  ) {}
 
   async create(createUser: CreateUserDtoType): Promise<void | User> {
     const key = this.createUserKey(createUser.connectionId);

@@ -8,6 +8,7 @@ export class WebSocketService {
   constructor(
     @inject(InversifyTypes.WEB_SOCKET_ADAPTER)
     private readonly webSocketAdapter: WebSocketAdapterInterface,
+    @inject(WebSocketConnectionBridge)
     private readonly webSocketConnectionBridge: WebSocketConnectionBridge
   ) {
     this.webSocketAdapter

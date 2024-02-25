@@ -18,11 +18,14 @@ import {
   createSessionDto,
 } from "./dto/create-session.dto";
 import { deleteteSessionDto } from "./dto/delete-session.dto";
+import { inject } from "inversify";
 
 @controller("/session")
 export class SessionController implements interfaces.Controller {
   constructor(
+    @inject(CreateSessionUseCase)
     private readonly createSessionUseCase: CreateSessionUseCase,
+    @inject(DeleteSessionUseCase)
     private readonly deleteSessionUseCase: DeleteSessionUseCase
   ) {}
 

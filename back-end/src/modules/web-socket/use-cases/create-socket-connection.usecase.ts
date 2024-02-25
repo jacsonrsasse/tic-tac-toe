@@ -1,9 +1,12 @@
 import { WebSocketService } from "../web-socket.service";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 @injectable()
 export class CreateSocketConnectionUseCase {
-  constructor(private readonly webSocketService: WebSocketService) {}
+  constructor(
+    @inject(WebSocketService)
+    private readonly webSocketService: WebSocketService
+  ) {}
 
   execute() {
     this.webSocketService.connect();
