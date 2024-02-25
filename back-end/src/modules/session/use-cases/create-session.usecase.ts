@@ -1,13 +1,13 @@
-import { InversifyTypes } from "@config/inversify";
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
 import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
+import { userSymbols } from "@modules/users/user.inversify";
 import { generateUserTokens } from "@shared/utils/generate-user-tokens.util";
 import { inject, injectable } from "inversify";
 
 @injectable()
 export class CreateSessionUseCase {
   constructor(
-    @inject(InversifyTypes.USER_REPOSITORY)
+    @inject(userSymbols.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface
   ) {}
 
