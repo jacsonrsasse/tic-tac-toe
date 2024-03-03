@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/index.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --poll --respawn --watch src src/index.ts",
     "drizzle:generate": "drizzle-kit generate:sqlite --config=drizzle.config.ts",
     "drizzle:drop": "drizzle-kit drop --config=drizzle.config.ts",
     "drizzle:migrate": "tsx ./src/database/migrate.ts",
