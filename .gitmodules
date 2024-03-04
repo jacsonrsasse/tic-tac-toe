@@ -1,0 +1,3 @@
+[submodule "web-socket"]
+	path = web-socket
+	url = https://github.com/jacsonrsasse/web-socket

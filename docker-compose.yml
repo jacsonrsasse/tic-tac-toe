@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: "no"
+    ports:
+      - 6379:6379
+
+  websocket:
+    build: ./web-socket
+    ports:
+      - 8080:8080
+    volumes:
+      - ./web-socket:/app
+    depends_on:
+      - redis
+
+  api:
+    build: ./back-end
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back-end:/app
+    depends_on:
+      - websocket
+
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - ./front-end:/app
+      # this is needed because Vite has a Esbuild dependecy
+      # and I developed it in Windows, but the container is Linux
+      - node_modules_linux:/app/node_modules
+    depends_on:
+      - api
+
+volumes:
+  node_modules_linux:
