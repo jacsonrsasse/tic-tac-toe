@@ -1,6 +1,6 @@
 import { DeleteUserDtoType } from "@modules/users/dto/delete-user.dto";
 import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
-import { userSymbols } from "@modules/users/user.inversify";
+import { userSymbols } from "@modules/users/user.module";
 import { inject, injectable } from "inversify";
 
 @injectable()

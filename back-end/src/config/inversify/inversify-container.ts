@@ -1,10 +1,10 @@
 import { Container } from "inversify";
 
 // modules
-import { sharedModule } from "@shared/shared.inversify";
-import { webSocketModule } from "@modules/web-socket/web-socket.inversify";
-import { sessionModule } from "@modules/session/session.inversify";
-import { userModule } from "@modules/users/user.inversify";
+import { sharedModule } from "@shared/shared.module";
+import { webSocketModule } from "@modules/web-socket/web-socket.module";
+import { sessionModule } from "@modules/session/session.module";
+import { userModule } from "@modules/users/user.module";
 
 const inversifyConfig = (() => {
   let container = new Container({ autoBindInjectable: true });

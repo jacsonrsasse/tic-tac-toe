@@ -1,6 +1,6 @@
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
 import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
-import { userSymbols } from "@modules/users/user.inversify";
+import { userSymbols } from "@modules/users/user.module";
 import { generateUserTokens } from "@shared/utils/generate-user-tokens.util";
 import { inject, injectable } from "inversify";
 

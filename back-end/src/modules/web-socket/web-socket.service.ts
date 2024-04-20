@@ -1,7 +1,7 @@
 import { WebSocketAdapterInterface } from "@shared/interfaces/web-socket-adapter.interface";
 import { WebSocketConnectionBridge } from "./web-socket-connection.bridge";
 import { inject, injectable } from "inversify";
-import { webSocketSymbols } from "./web-socket.inversify";
+import { webSocketSymbols } from "./web-socket.module";
 
 @injectable()
 export class WebSocketService {
