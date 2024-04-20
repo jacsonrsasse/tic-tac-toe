@@ -35,13 +35,11 @@ export default class Server {
       app.use(express.json());
 
       app.use(cookieParser());
-
-      app.use(isConnectableMiddleware);
     });
 
     const app = server.build();
     app.listen(env.SERVER_PORT || 3000, () => {
-      this.webSocketStart();
+      console.log(`Server running on port ${env.SERVER_PORT || 3000}`);
     });
   }
 

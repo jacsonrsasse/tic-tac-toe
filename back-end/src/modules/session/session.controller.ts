@@ -31,14 +31,11 @@ export class SessionController implements interfaces.Controller {
 
   @httpPost("/login", routeParamsMiddleware(createSessionDto))
   async create(request: Request, response: Response) {
-    const {
-      body: { nickname, connectionId },
-    } = request as CreateSessionDtoType;
+    const createSessionDto = request as CreateSessionDtoType;
 
     const user = await this.createSessionUseCase.execute({
       ipAddress: request.ip,
-      nickname,
-      connectionId,
+      ...createSessionDto.body,
     });
 
     response.json({
