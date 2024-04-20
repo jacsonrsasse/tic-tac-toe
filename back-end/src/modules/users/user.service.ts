@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   public async create(createUser: CreateUserDtoType) {
-    if (schemaTypeValidator(createUserDto, createUser)) {
+    if (!schemaTypeValidator(createUserDto, createUser)) {
       return false;
     }
 
