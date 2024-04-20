@@ -4,10 +4,9 @@ import { User } from "@modules/users/entities/user.entity";
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
 import { DeleteUserDtoType } from "@modules/users/dto/delete-user.dto";
 import { RedisClientService } from "@shared/services/redis-client.service";
-import { convertUndefinedPropertiesToNull } from "@shared/utils/undefinable-to-null.util";
 
 @injectable()
-export class UserRepository implements UserRepositoryInterface {
+export class UserRedisRepository implements UserRepositoryInterface {
   private USER_CONSTANT_KEY = "user_connection";
 
   constructor(

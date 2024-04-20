@@ -1,24 +1,27 @@
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
-import { UserRepositoryInterface } from "@modules/users/repositories/interfaces/user-repository.interface";
+import { UserRepositoryInterface } from "@modules/users/interfaces/user-repository.interface";
 import { userSymbols } from "@modules/users/user.module";
-import { generateUserTokens } from "@shared/utils/generate-user-tokens.util";
+import { UserService } from "@modules/users/user.service";
+import { AuthTokenService } from "@shared/services/auth-token.service";
 import { inject, injectable } from "inversify";
 
 @injectable()
 export class CreateSessionUseCase {
   constructor(
-    @inject(userSymbols.USER_REPOSITORY)
-    private readonly userRepository: UserRepositoryInterface
+    private readonly userService: UserService,
+    private readonly authTokenService: AuthTokenService
   ) {}
 
   async execute(createUser: CreateUserDtoType): Promise<string[]> {
-    const user = await this.userRepository.create(createUser);
+    const user = await this.userService.create(createUser);
 
     if (!user) {
       throw new Error("Failed to create a session");
     }
 
-    const [token, refreshToken] = generateUserTokens(user.userId);
+    const [token, refreshToken] = this.authTokenService.generateTokens(
+      user.userId
+    );
 
     return [token, refreshToken];
   }

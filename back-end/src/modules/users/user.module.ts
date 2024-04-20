@@ -1,8 +1,8 @@
 import { ContainerModule, interfaces } from "inversify";
 import { PutUserInLoobyUseCase } from "./use-cases/put-user-in-looby.usecase";
 import { inversifyAutoBind } from "@config/inversify/inversify-auto-bind";
-import { UserRepositoryInterface } from "./repositories/interfaces/user-repository.interface";
-import { UserRepository } from "./repositories/redis/user.respository";
+import { UserRepositoryInterface } from "./interfaces/user-repository.interface";
+import { UserRedisRepository } from "./repositories/user.redis-respository";
 
 const userSymbols = {
   USER_REPOSITORY: Symbol.for("UserRepositoryInterface"),
@@ -16,7 +16,9 @@ const autoBind = {
 const userModule = new ContainerModule((bind: interfaces.Bind) => {
   inversifyAutoBind(autoBind, bind);
 
-  bind<UserRepositoryInterface>(userSymbols.USER_REPOSITORY).to(UserRepository);
+  bind<UserRepositoryInterface>(userSymbols.USER_REPOSITORY).to(
+    UserRedisRepository
+  );
 });
 
 export { userModule, userSymbols };
