@@ -1,12 +1,11 @@
-import { z } from "zod";
+import { IsString, MinLength, MaxLength } from 'class-validator';
 
-const createSessionDto = z.object({
-  body: z.object({
-    nickname: z.string().min(8).max(50),
-    connectionId: z.string(),
-  }),
-});
+export class CreateSessionDto {
+  @IsString()
+  @MinLength(8)
+  @MaxLength(50)
+  nickname: string;
 
-type CreateSessionDtoType = z.infer<typeof createSessionDto>;
-
-export { createSessionDto, CreateSessionDtoType };
+  @IsString()
+  connectionId: string;
+}

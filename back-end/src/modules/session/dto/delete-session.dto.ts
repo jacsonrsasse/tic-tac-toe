@@ -1,11 +1,3 @@
-import { z } from "zod";
+import { DeleteUserDto } from '@modules/user/dto/delete-user.dto';
 
-const deleteteSessionDto = z.object({
-  params: z.object({
-    id: z.string(),
-  }),
-});
-
-type DeleteSessionDtoType = z.infer<typeof deleteteSessionDto>;
-
-export { deleteteSessionDto, DeleteSessionDtoType };
+export class DeleteSessionDto extends DeleteUserDto {}

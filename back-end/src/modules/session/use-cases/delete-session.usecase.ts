@@ -1,16 +1,14 @@
-import { DeleteUserDtoType } from "@modules/users/dto/delete-user.dto";
-import { UserRepositoryInterface } from "@modules/users/interfaces/user-repository.interface";
-import { userSymbols } from "@modules/users/user.module";
-import { inject, injectable } from "inversify";
+import { Injectable } from '@nestjs/common';
+import { UserService } from '@modules/user/user.service';
+import { DeleteUser } from '@modules/user/types/user.types';
 
-@injectable()
+type DeleteSession = DeleteUser;
+
+@Injectable()
 export class DeleteSessionUseCase {
-  constructor(
-    @inject(userSymbols.USER_REPOSITORY)
-    private readonly userRepository: UserRepositoryInterface
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
-  execute(deleteUser: DeleteUserDtoType) {
-    return this.userRepository.delete(deleteUser);
+  async execute(deleteSession: DeleteSession): Promise<string> {
+    return this.userService.delete(deleteSession);
   }
 }

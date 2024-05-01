@@ -1,6 +1,7 @@
-import { z } from "zod";
-import dotenv from "dotenv";
-dotenv.config();
+import { z } from 'zod';
+import { config } from 'dotenv';
+
+config();
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
@@ -14,7 +15,7 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  throw new Error("Variaveis ambiente com erro");
+  throw new Error('Error to load environment variables');
 }
 
 export const env = parsed.data;

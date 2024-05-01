@@ -1,26 +1,25 @@
-import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
-import { UserService } from "@modules/users/user.service";
-import { AuthTokenService } from "@shared/services/auth-token.service";
-import { inject, injectable } from "inversify";
+import { Injectable } from '@nestjs/common';
+import { DtoToInterface } from '@utils/dto-to-type.util';
+import { AuthTokenService } from '@shared/services/auth-token.service';
+import { UserService } from '@modules/user/user.service';
+import { CreateUserDto } from '@modules/user/dto/create-user.dto';
 
-@injectable()
+interface CreateSession {
+  data: DtoToInterface<CreateUserDto>;
+}
+
+@Injectable()
 export class CreateSessionUseCase {
   constructor(
-    @inject(UserService)
+    private readonly authTokenService: AuthTokenService,
     private readonly userService: UserService,
-    @inject(AuthTokenService)
-    private readonly authTokenService: AuthTokenService
   ) {}
 
-  async execute(createUser: CreateUserDtoType): Promise<string[]> {
-    const user = await this.userService.create(createUser);
-
-    if (!user) {
-      throw new Error("Failed to create a session");
-    }
+  async execute({ data }: CreateSession): Promise<[string, string]> {
+    await this.userService.create({ data });
 
     const [token, refreshToken] = this.authTokenService.generateTokens(
-      user.userId
+      JSON.stringify({ userId: 123 }),
     );
 
     return [token, refreshToken];

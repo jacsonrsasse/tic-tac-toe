@@ -1,21 +1,15 @@
-import { ContainerModule, interfaces } from "inversify";
-import { CreateSessionUseCase } from "./use-cases/create-session.usecase";
-import { DeleteSessionUseCase } from "./use-cases/delete-session.usecase";
-import { inversifyAutoBind } from "@config/inversify/inversify-auto-bind";
+import { Module } from '@nestjs/common';
+import { SharedModule } from '@shared/shared.module';
+import { UserModule } from '@modules/user/user.module';
 
-const sessionSymbols = {
-  CREATE_SESSION: Symbol.for(CreateSessionUseCase.name),
-  DELETE_SESSION: Symbol.for(DeleteSessionUseCase.name),
-};
+import { SessionController } from './session.controller';
 
-const autoBind = {
-  [sessionSymbols.CREATE_SESSION]: CreateSessionUseCase,
-  [sessionSymbols.DELETE_SESSION]: DeleteSessionUseCase,
-};
+import { CreateSessionUseCase } from './use-cases/create-session.usecase';
+import { DeleteSessionUseCase } from './use-cases/delete-session.usecase';
 
-const sessionModule = new ContainerModule((bind: interfaces.Bind) => {
-  inversifyAutoBind(autoBind, bind);
-});
-
-export * from "@modules/session/session.controller";
-export { sessionModule, sessionSymbols };
+@Module({
+  imports: [SharedModule, UserModule],
+  controllers: [SessionController],
+  providers: [CreateSessionUseCase, DeleteSessionUseCase],
+})
+export class SessionModule {}
