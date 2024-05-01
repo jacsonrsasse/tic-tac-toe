@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DtoToInterface } from '@utils/dto-to-type.util';
 import { AuthTokenService } from '@shared/services/auth-token.service';
 import { UserService } from '@modules/user/user.service';
-import { CreateUserDto } from '@modules/user/dto/create-user.dto';
+import { CreateUser } from '@modules/user/types/user.types';
 
-interface CreateSession {
-  data: DtoToInterface<CreateUserDto>;
-}
+type CreateSession = CreateUser;
 
 @Injectable()
 export class CreateSessionUseCase {
@@ -15,8 +12,8 @@ export class CreateSessionUseCase {
     private readonly userService: UserService,
   ) {}
 
-  async execute({ data }: CreateSession): Promise<[string, string]> {
-    await this.userService.create({ data });
+  async execute(createSession: CreateSession): Promise<[string, string]> {
+    await this.userService.create(createSession);
 
     const [token, refreshToken] = this.authTokenService.generateTokens(
       JSON.stringify({ userId: 123 }),

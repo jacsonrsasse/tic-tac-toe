@@ -17,12 +17,13 @@ export class SessionController {
     @Request() req: Req,
   ): Promise<[string, string]> {
     return this.createSessionUseCase.execute({
-      data: { ...createSession, ipAddress: req.ip },
+      ...createSession,
+      ipAddress: req.ip,
     });
   }
 
   @Put('logout/:id')
-  async delete(@Param(':id') id: string): Promise<string> {
+  async delete(@Param('id') id: string): Promise<string> {
     return this.deleteSessionUseCase.execute({ id });
   }
 }
