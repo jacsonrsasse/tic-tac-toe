@@ -1,28 +1,26 @@
 import { env } from "@config/env";
 import { injectable } from "inversify";
 import { RedisClientType, createClient } from "redis";
-import { promise } from "zod";
 
 @injectable()
 export class RedisClientService {
   private client: RedisClientType;
 
-  async getClient() {
-    if (!this.client) {
-      this.client = createClient({
-        url: env.REDIS_URL,
-        database: env.REDIS_DATABASE,
-      });
+  constructor() {
+    this.client = createClient({
+      url: env.REDIS_URL,
+      database: env.REDIS_DATABASE,
+    });
 
-      await this.client.connect();
-    }
+    this.client.connect().then().catch(console.error);
+  }
 
+  getClient() {
     return this.client;
   }
 
   async getAllAsJson<T>(keyPrefix: string): Promise<T[] | void> {
-    const client = await this.getClient();
-    const keysData = await client.keys(keyPrefix);
+    const keysData = await this.getClient().keys(keyPrefix);
 
     if (!keysData) return;
 
@@ -35,8 +33,7 @@ export class RedisClientService {
   }
 
   async getAsJson<T>(key: string): Promise<T | void> {
-    const client = await this.getClient();
-    const dataAsString = await client.get(key);
+    const dataAsString = await this.getClient().get(key);
 
     if (!dataAsString) {
       return;
@@ -46,12 +43,10 @@ export class RedisClientService {
   }
 
   async setJsonData<T>(key: string, data: T) {
-    const client = await this.getClient();
-    return client.set(key, JSON.stringify(data));
+    return this.getClient().set(key, JSON.stringify(data));
   }
 
   async delete(key: string) {
-    const client = await this.getClient();
-    return client.del(key);
+    return this.getClient().del(key);
   }
 }

@@ -3,14 +3,17 @@ import { PutUserInLoobyUseCase } from "./use-cases/put-user-in-looby.usecase";
 import { inversifyAutoBind } from "@config/inversify/inversify-auto-bind";
 import { UserRepositoryInterface } from "./interfaces/user-repository.interface";
 import { UserRedisRepository } from "./repositories/user.redis-respository";
+import { UserService } from "./user.service";
 
 const userSymbols = {
   USER_REPOSITORY: Symbol.for("UserRepositoryInterface"),
   PUT_USER_IN_LOBBY: Symbol.for(PutUserInLoobyUseCase.name),
+  USER_SERVICE: Symbol.for(UserService.name),
 };
 
 const autoBind = {
   [userSymbols.PUT_USER_IN_LOBBY]: PutUserInLoobyUseCase,
+  [userSymbols.USER_SERVICE]: UserService,
 };
 
 const userModule = new ContainerModule((bind: interfaces.Bind) => {

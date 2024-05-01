@@ -1,6 +1,4 @@
 import { CreateUserDtoType } from "@modules/users/dto/create-user.dto";
-import { UserRepositoryInterface } from "@modules/users/interfaces/user-repository.interface";
-import { userSymbols } from "@modules/users/user.module";
 import { UserService } from "@modules/users/user.service";
 import { AuthTokenService } from "@shared/services/auth-token.service";
 import { inject, injectable } from "inversify";
@@ -8,7 +6,9 @@ import { inject, injectable } from "inversify";
 @injectable()
 export class CreateSessionUseCase {
   constructor(
+    @inject(UserService)
     private readonly userService: UserService,
+    @inject(AuthTokenService)
     private readonly authTokenService: AuthTokenService
   ) {}
 
