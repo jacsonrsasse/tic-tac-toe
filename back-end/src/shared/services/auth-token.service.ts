@@ -1,6 +1,6 @@
 import { env } from '@config/env';
 import { Injectable } from '@nestjs/common';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 Injectable();
 export class AuthTokenService {
@@ -15,5 +15,13 @@ export class AuthTokenService {
     });
 
     return [token, refreshToken];
+  }
+
+  public static verifyToken(token: string): boolean {
+    try {
+      return !!verify(token, env.JWT_SECRET);
+    } catch (error) {
+      return false;
+    }
   }
 }
